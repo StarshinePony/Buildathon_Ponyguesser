@@ -11,16 +11,14 @@ DISCORD_TOKEN = os.getenv("discord_token")
 authserver = os.getenv("authserver")
 developer = os.getenv("developerid")
 intents = discord.Intents.all()
-currentprefix = 'v!'
+currentprefix = '!'
 bot = commands.Bot(command_prefix=currentprefix, intents=intents)
-bot.remove_command("help")
 
 @bot.event
 async def on_ready():
     await bot.add_cog(guesser(bot))
-    await bot.tree.sync(guild=discord.Object(id=authserver))
-    await bot.tree.sync()
-    print(f"Synced commands")
+    #await bot.tree.sync(guild=discord.Object(id=authserver))
+    #await bot.tree.sync()
     print("[MAIN INFO] Bot is ready!")
 
 @bot.tree.context_menu(name="whothis")
@@ -40,4 +38,14 @@ async def on_message(message):
         await bot.process_commands(message)
         return
     await bot.process_commands(message)
+@bot.command()
+async def sync(ctx: commands.Context):
+    await ctx.send("Syncing Slash Commands")
+    synced = await bot.tree.sync()
+    if len(synced) > 0:
+        for cmd in synced:
+            await ctx.send(f"Synced {cmd}")
+        await ctx.send(f"Synced {len(synced)} Commands Globally!")
+    else:
+        await ctx.send("No Slash Commands to Register.")
 bot.run(DISCORD_TOKEN)

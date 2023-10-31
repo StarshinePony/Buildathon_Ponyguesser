@@ -30,7 +30,7 @@ class guesser(commands.Cog):
                     return msg.author == ctx.author and msg.channel == ctx.channel
 
                 try:
-                    user_guess = await self.bot.wait_for('message', check=check, timeout=500)
+                    user_guess = await self.bot.wait_for('message', check=check, timeout=500) # adjust the timeout if you want to give the player less time
                     user_input = user_guess.content
 
                     max_ratio = 0
