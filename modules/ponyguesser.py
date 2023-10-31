@@ -46,7 +46,7 @@ class guesser(commands.Cog):
                             matched_season, matched_episode_number = episode_code.split('E')
                             trash, matched_season_number = matched_season.split('S')
 
-                    if max_ratio > 90:  # Adjust the similarity threshold as needed
+                    if max_ratio > 90:  # Adjust the similarity threshold as needed # but 90 seems to be perfect :D
                         check_url = f'https://ponyguessr.com/api/resource/{image_id}/check?season={matched_season_number}&episode={matched_episode_number}'
                         check_response = requests.get(check_url)
                         check_data = check_response.json()
